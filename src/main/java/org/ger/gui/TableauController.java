@@ -4,6 +4,8 @@ import com.sun.javafx.collections.MappingChange;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -31,6 +33,8 @@ public class TableauController implements Initializable {
     public Label labLabel;
     public Label labPrix;
     public Label labArtiste;
+
+
     ObservableList listDisc = FXCollections.observableArrayList();
     HashMap<Integer, String> listArtists = new HashMap();
 
@@ -42,11 +46,12 @@ public class TableauController implements Initializable {
         colTitre.setCellValueFactory(new PropertyValueFactory<Disc, String>("discTitle"));
         colAnnee.setCellValueFactory(new PropertyValueFactory<Disc, String>("discYear"));
         colPrix.setCellValueFactory(new PropertyValueFactory<Disc, String>("discPrice"));
+
         tableExemple.setItems(listDisc);
 
         //loadDB();
-        // loadDb2();
-        // loadArtists();
+         loadDb2();
+         loadArtists();
     }
 
     public void loadDetails(MouseEvent mouseEvent) {
@@ -55,29 +60,29 @@ public class TableauController implements Initializable {
         labAnnee.setText(String.valueOf(disc.getDiscYear()));
         labPrix.setText(disc.getDiscPrice() + " €");
         labLabel.setText(disc.getDiscLabel());
-        labArtiste.setText(disc.getArtistId() + "");
-        // labArtiste.setText((String) listArtists.get(disc.getArtistId()));
+       // labArtiste.setText(disc.getArtistId() + "");
+         labArtiste.setText((String) listArtists.get(disc.getArtistId()));
         // System.out.println(listArtists.get(disc.getArtistId()));
     }
 
-//    public void loadDB(){
-//        String dest = "jdbc:mysql://localhost:3306/record";
-//        String usr = "root";
-//        String pass = "Grm1";
-//        Connection con;
-//        try {
-//            con = DriverManager.getConnection(dest,usr,pass);
-//            Statement stm = con.createStatement();
-//            ResultSet resultSet = stm.executeQuery("SELECT * from disc");
-//            while(resultSet.next()){
-//                System.out.println(resultSet.getString("disc_title"));
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    /*public void loadDB(){
+        String dest = "jdbc:mysql://localhost:3306/record";
+        String usr = "root";
+        String pass = "Grm1";
+        Connection con;
+        try {
+            con = DriverManager.getConnection(dest,usr,pass);
+            Statement stm = con.createStatement();
+            ResultSet resultSet = stm.executeQuery("SELECT * from disc");
+            while(resultSet.next()){
+                System.out.println(resultSet.getString("disc_title"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }*/
 
-      /*  public void loadDb2(){
+        public void loadDb2(){
         listDisc.clear();
         String dest = "jdbc:mysql://localhost:3306/record";
         String usr = "root";
@@ -103,9 +108,13 @@ public class TableauController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }*/
+        Alert.AlertType alertAlertType;
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setContentText("Tout s'est bien passé");
+        alert.showAndWait();
+    }
 
-    /*
+
     public void loadArtists() {
         String dest = "jdbc:mysql://localhost:3306/record";
         String usr = "root";
@@ -114,7 +123,7 @@ public class TableauController implements Initializable {
         try {
             con = DriverManager.getConnection(dest, usr, pass);
             Statement stm = con.createStatement();
-            ResultSet resultSet = stm.executeQuery("SELECT * from artist");
+            ResultSet resultSet = stm.executeQuery("SELECT artist_id,artist_name from artist");
             while (resultSet.next()) {
                 listArtists.put(resultSet.getInt("artist_id"), resultSet.getString("artist_name"));
             }
@@ -122,5 +131,5 @@ public class TableauController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }*/
+    }
 }

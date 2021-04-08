@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("tableau.fxml")));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/tableau.fxml"));
         Scene scene = new Scene(root);
         System.out.println("ici");
         primaryStage.setScene(scene);
